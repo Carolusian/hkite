@@ -3,6 +3,9 @@ var gulp = require('gulp'),
 	livereload = require('gulp-livereload'),
 	jshint = require('gulp-jshint'),
 	jshintReporter = require('jshint-stylish'),
+	less = require('gulp-less'),
+	cssmin = require('gulp-cssmin'),
+	rename = require('gulp-rename'),
 	watch = require('gulp-watch');
 
 /*
@@ -12,6 +15,9 @@ var paths = {
 	'src':['./models/**/*.js','./routes/**/*.js', 'keystone.js', 'package.json']
 };
 
+var lessPaths = {
+	'src':['./public/styles/**/*.less']
+}
 
 // gulp lint
 gulp.task('lint', function(){
@@ -34,6 +40,24 @@ gulp.task('server:start', function() {
 	server.listen({path: './keystone.js'});
 });
 
+gulp.task('less:compile', function() {
+	gulp.src(['./public/styles/*.less'])
+		.pipe(watch())
+		.pipe(less().on('error', function(err){
+			console.log(err);
+		}))
+		.pipe(cssmin().on('error', function(){
+			console.log(err);
+		}))
+		.pipe(rename({suffix: '.min'}))
+		.pipe(gulp.dest('./public/styles/'));
+});
+
+gulp.task('watch:less', function(){
+	// calls "build-js" whenever anything changes
+    gulp.watch(lessPaths.src, ["less:compile"]);
+});
+
 // reload changed files for http server
 gulp.task('server:restart', function() {
 	function restart(file) {
@@ -46,4 +70,4 @@ gulp.task('server:restart', function() {
 		.on('change', restart);
 });
 
-gulp.task('default', ['server:start', 'server:restart']);
+gulp.task('default', ['server:start', 'watch:less', 'server:restart']);
