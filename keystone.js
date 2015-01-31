@@ -71,3 +71,81 @@ keystone.set('nav', {
 // Start Keystone to connect to your database and initialise the web server
 
 keystone.start();
+
+// After web server started, we can do some cron jobs. 
+// e.g. grab hkite posts from good spreadsheets.
+console.log("after keystone started. \n");
+var CronJob = require('cron').CronJob;
+var articlePostsJob = new CronJob({
+    cronTime: '* * 1 * * *',
+    onTick: pullArticlePosts, // Call this function to get all articles 
+    start: false,
+    timeZone: "Asia/Hong_Kong"
+});
+
+function pullArticlePosts() {
+
+	var https = require('https');
+
+	// This spreadsheet should content information for all articles
+	var options = {
+	  host: 'spreadsheets.google.com',
+	  port: 443,
+	  path: '/feeds/list/1We6YTBTZUMwxqRqWkRJs_lzmrzWhq5V_t93q7jw_dLw/od6/public/values?alt=json',
+	  method: 'GET'
+	};
+
+	// Save articles from spreadsheets to Mongodb
+	save = function(resptxt) {
+		var posts = JSON.parse(resptxt);
+		posts = posts['feed']['entry'];
+		var Post = keystone.list('Post');
+
+		posts.forEach(saveOne); // Call the functions to save all articles
+	};
+
+	// The function which really save article to db 
+	saveOne = function(post) {
+		var Post = keystone.list('Post');
+		var query = Post.model.findOne({ spreadsheetId: post['gsx$articleid']['$t'] });
+		
+		query.exec().then(function(p){
+			// If article post already exist, do nothing
+			// Else, save to db
+			if(p != null) {
+				console.log(post['gsx$articletitle']['$t'] + ' existed already \n');
+			} else {
+				var newPost = new Post.model({
+					title:  post['gsx$articletitle']['$t'],
+					link: post['gsx$link']['$t'],
+					linkTitle: post['gsx$linktitle']['$t'],
+					content: post['gsx$linkdescription']['$t'].replace('\n', '<br>'),
+					spreadsheetId: post['gsx$articleid']['$t']
+				});
+				newPost.save(function(err){
+					console.log(err);
+				});
+			}
+		}, function(err){
+			console.log(err);	
+		});
+	};
+
+	callback = function(response) {
+	  var str = ''
+	  response.on('data', function (chunk) {
+	    str += chunk;
+	  });
+
+	  response.on('end', function () {
+	  	// If successfully get json data from spreadsheet,
+	  	// Try to save data to mongo
+	    save(str);
+	  });
+	};
+
+	var req = https.request(options, callback);
+	req.end();
+}
+
+articlePostsJob.start();
