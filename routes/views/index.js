@@ -8,7 +8,28 @@ exports = module.exports = function(req, res) {
 	// locals.section is used to set the currently selected
 	// item in the header navigation.
 	locals.section = 'home';
-	
+	locals.data = {
+		posts: []
+	};
+
+	// Load all posts
+	view.on('init', function(next){
+		var q = keystone.list('Post').model.find().sort('-spreadsheetId');
+
+		q.exec(function(err, res) {
+			res.forEach(function(post, i){
+				// A stupid method to clone json object...
+				post = JSON.parse(JSON.stringify(post));
+				// The first one is odd, but 0 % 2 == 0
+				i % 2 == 0? post.listColumn = "-odd": post.listColumn = "-even";
+				locals.data.posts.push(post);
+			});
+			console.log(locals.data.posts);
+			next(err);
+		});
+
+	});
+
 	// Render the view
 	view.render('index');
 	

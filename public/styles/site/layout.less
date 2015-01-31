@@ -101,6 +101,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, 
 	padding: .5em;
 	position: absolute;
 	width: 35%;
+	z-index: 2;
 }
 .hero-meetup--next .hero-background {
 	background: url('/images/background_hk.jpg') no-repeat center center / cover;
@@ -118,4 +119,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, 
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+.page-content {
+	position: relative;
+	z-index: 1;
+}
+
+.mb-0 {
+	margin-bottom: 0 !important;
 }

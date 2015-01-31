@@ -77,7 +77,7 @@ keystone.start();
 console.log("after keystone started. \n");
 var CronJob = require('cron').CronJob;
 var articlePostsJob = new CronJob({
-	cronTime: '* * 1 * * *',
+	cronTime: '00 40 1 * * *',
 	onTick: pullArticlePosts, // Call this function to get all articles 
 	start: false,
 	timeZone: "Asia/Hong_Kong"
