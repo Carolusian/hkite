@@ -73,7 +73,7 @@ keystone.set('nav', {
 keystone.start();
 
 // After web server started, we can do some cron jobs. 
-// e.g. grab hkite posts from good spreadsheets.
+// e.g. grab hkite posts from google spreadsheets.
 console.log("after keystone started. \n");
 var CronJob = require('cron').CronJob;
 var articlePostsJob = new CronJob({

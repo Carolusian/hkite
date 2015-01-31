@@ -18,7 +18,7 @@ exports = module.exports = function(req, res) {
 
 		q.exec(function(err, res) {
 			res.forEach(function(post, i){
-				// A stupid method to clone json object...
+				// A stupid way to clone json object...
 				post = JSON.parse(JSON.stringify(post));
 				// The first one is odd, but 0 % 2 == 0
 				i % 2 == 0? post.listColumn = "-odd": post.listColumn = "-even";
