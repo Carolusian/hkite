@@ -4,7 +4,7 @@ require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone'),
-	handlebars = require('express-handlebars');
+    handlebars = require('express-handlebars');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -12,28 +12,28 @@ var keystone = require('keystone'),
 
 keystone.init({
 
-	'name': 'hkite',
-	'brand': 'hkite',
-	
-	'less': 'public',
-	'static': 'public',
-	'favicon': 'public/favicon.ico',
-	'views': 'templates/views',
-	'view engine': 'hbs',
-	
-	'custom engine': handlebars.create({
-		layoutsDir: 'templates/views/layouts',
-		partialsDir: 'templates/views/partials',
-		defaultLayout: 'default',
-		helpers: new require('./templates/views/helpers')(),
-		extname: '.hbs'
-	}).engine,
-	
-	'auto update': true,
-	'session': true,
-	'auth': true,
-	'user model': 'User',
-	'cookie secret': '93CV/Uz(93G>H1TJ@5H9]E#&R1&1WF+g`u/]KTHKET:fal=daW0<OSBuLty)G/IB'
+    'name': 'hkite',
+    'brand': 'hkite',
+    
+    'less': 'public',
+    'static': 'public',
+    'favicon': 'public/favicon.ico',
+    'views': 'templates/views',
+    'view engine': 'hbs',
+    
+    'custom engine': handlebars.create({
+        layoutsDir: 'templates/views/layouts',
+        partialsDir: 'templates/views/partials',
+        defaultLayout: 'default',
+        helpers: new require('./templates/views/helpers')(),
+        extname: '.hbs'
+    }).engine,
+    
+    'auto update': true,
+    'session': true,
+    'auth': true,
+    'user model': 'User',
+    'cookie secret': '93CV/Uz(93G>H1TJ@5H9]E#&R1&1WF+g`u/]KTHKET:fal=daW0<OSBuLty)G/IB'
 
 });
 
@@ -46,10 +46,10 @@ keystone.import('models');
 // for each request) should be added to ./routes/middleware.js
 
 keystone.set('locals', {
-	_: require('underscore'),
-	env: keystone.get('env'),
-	utils: keystone.utils,
-	editable: keystone.content.editable
+    _: require('underscore'),
+    env: keystone.get('env'),
+    utils: keystone.utils,
+    editable: keystone.content.editable
 });
 
 // Load your project's Routes
@@ -62,10 +62,10 @@ keystone.set('routes', require('./routes'));
 // Configure the navigation bar in Keystone's Admin UI
 
 keystone.set('nav', {
-	'posts': ['posts', 'post-categories'],
-	'galleries': 'galleries',
-	'enquiries': 'enquiries',
-	'users': 'users'
+    'posts': ['posts', 'post-categories'],
+    'galleries': 'galleries',
+    'enquiries': 'enquiries',
+    'users': 'users'
 });
 
 // Start Keystone to connect to your database and initialise the web server
@@ -85,67 +85,67 @@ var articlePostsJob = new CronJob({
 
 function pullArticlePosts() {
 
-	var https = require('https');
+    var https = require('https');
 
-	// This spreadsheet should content information for all articles
-	var options = {
-	  host: 'spreadsheets.google.com',
-	  port: 443,
-	  path: '/feeds/list/1We6YTBTZUMwxqRqWkRJs_lzmrzWhq5V_t93q7jw_dLw/od6/public/values?alt=json',
-	  method: 'GET'
-	};
+    // This spreadsheet should content information for all articles
+    var options = {
+      host: 'spreadsheets.google.com',
+      port: 443,
+      path: '/feeds/list/1We6YTBTZUMwxqRqWkRJs_lzmrzWhq5V_t93q7jw_dLw/od6/public/values?alt=json',
+      method: 'GET'
+    };
 
-	// Save articles from spreadsheets to Mongodb
-	save = function(resptxt) {
-		var posts = JSON.parse(resptxt);
-		posts = posts['feed']['entry'];
-		var Post = keystone.list('Post');
+    // Save articles from spreadsheets to Mongodb
+    save = function(resptxt) {
+        var posts = JSON.parse(resptxt);
+        posts = posts['feed']['entry'];
+        var Post = keystone.list('Post');
 
-		posts.forEach(saveOne); // Call the functions to save all articles
-	};
+        posts.forEach(saveOne); // Call the functions to save all articles
+    };
 
-	// The function which really save article to db 
-	saveOne = function(post) {
-		var Post = keystone.list('Post');
-		var query = Post.model.findOne({ spreadsheetId: post['gsx$articleid']['$t'] });
-		
-		query.exec().then(function(p){
-			// If article post already exist, do nothing
-			// Else, save to db
-			if(p != null) {
-				console.log(post['gsx$articletitle']['$t'] + ' existed already \n');
-			} else {
-				var newPost = new Post.model({
-					title:  post['gsx$articletitle']['$t'],
-					link: post['gsx$link']['$t'],
-					linkTitle: post['gsx$linktitle']['$t'],
-					content: post['gsx$linkdescription']['$t'].replace('\n', '<br>'),
-					spreadsheetId: post['gsx$articleid']['$t']
-				});
-				newPost.save(function(err){
-					console.log(err);
-				});
-			}
-		}, function(err){
-			console.log(err);	
-		});
-	};
+    // The function which really save article to db 
+    saveOne = function(post) {
+        var Post = keystone.list('Post');
+        var query = Post.model.findOne({ spreadsheetId: post['gsx$articleid']['$t'] });
+        
+        query.exec().then(function(p){
+            // If article post already exist, do nothing
+            // Else, save to db
+            if(p != null) {
+                console.log(post['gsx$articletitle']['$t'] + ' existed already \n');
+            } else {
+                var newPost = new Post.model({
+                    title:  post['gsx$articletitle']['$t'],
+                    link: post['gsx$link']['$t'],
+                    linkTitle: post['gsx$linktitle']['$t'],
+                    content: post['gsx$linkdescription']['$t'].replace('\n', '<br>'),
+                    spreadsheetId: post['gsx$articleid']['$t']
+                });
+                newPost.save(function(err){
+                    console.log(err);
+                });
+            }
+        }, function(err){
+            console.log(err);   
+        });
+    };
 
-	callback = function(response) {
-	  var str = ''
-	  response.on('data', function (chunk) {
-	    str += chunk;
-	  });
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
 
-	  response.on('end', function () {
-	  	// If successfully get json data from spreadsheet,
-	  	// Try to save data to mongo
-	    save(str);
-	  });
-	};
+      response.on('end', function () {
+        // If successfully get json data from spreadsheet,
+        // Try to save data to mongo
+        save(str);
+      });
+    };
 
-	var req = https.request(options, callback);
-	req.end();
+    var req = https.request(options, callback);
+    req.end();
 }
 
 articlePostsJob.start();
