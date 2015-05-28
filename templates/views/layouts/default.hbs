@@ -21,9 +21,9 @@
 		
 	</head>
 	<body>
-		<div id="header">
-			<div class="container">
-			<div role="navigation" class="navbar navbar-default">
+		<header id="header">
+			<section class="container">
+			<nav role="navigation" class="navbar navbar-default">
 					<div class="container-fluid">
 						<div class="navbar-header">
 							<button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
@@ -50,9 +50,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div id="body">
+			</nav>
+		</header>
+		<main id="body" role="main" class="site-body">
 			<!--
 				Flash messages allow you to display once-off status messages to users, e.g. form
 				validation errors, success messages, etc
@@ -83,11 +83,9 @@
 			{{/if}}
 			<!-- The content block should contain the body of your template's content-->
 			{{{body}}}
-		</div>
-		<div class="container">
-			<div id="footer">
-			</div>
-		</div>
+		</main>
+		<footer id="footer" class="container">
+		</footer>
 		{{!--
 			//- jQuery 1.11.1 is included by default, and required by both Bootstrap
 			//- and the KeystoneJS Content Editor. If you are not targeting IE8,

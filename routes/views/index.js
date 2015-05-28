@@ -24,7 +24,6 @@ exports = module.exports = function(req, res) {
 				i % 2 == 0? post.listColumn = "-odd": post.listColumn = "-even";
 				locals.data.posts.push(post);
 			});
-			console.log(locals.data.posts);
 			next(err);
 		});
 
