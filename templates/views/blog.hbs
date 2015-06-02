@@ -1,32 +1,48 @@
-<div class="container">
-	<h1>Blog</h1>
+<div class="page-intro">
+	<div class="container">
+		<h1 class="page-title">Blog</h1>
+		<p class="lead">
+			This is the blog of HKITE.
+		</p>
+	</div>
 </div>
-<div class="container">
-	<div class="row">
-		<div class="col-sm-8 col-md-9">
-			<h4 class="text-weight-normal">Showing {{ data.posts.results.length}} post.</h4>
-			<div class="blog">
-				{{# each data.posts.results}}
-				<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user _id}}{{/if}}" class="post">
-					<h2><a href="{{postUrl slug}}">{{{title}}}</a></h2>
-					<p class="lead text-muted">{{{categoryList categories prefix="Posted in "}}}
-							{{#if author.name.first}}by {{author.name.first}}{{/if}}
-					</p>
-					<p>{{{content.extended}}}</p>
-					<p class="read-more"><a href="{{postUrl slug}}">Read more...</a></p>
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10">
+				<div itemscope itemtype="http://schema.org/Blog" class="post-cards row">
+					{{# each data.posts.results}}
+					<div class="col-sm-4">
+						<article role="article" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" class="post-card">
+							<a href="/blog/post/booking-some-face-time-with-facebook" class="post-image"><img src="http://res.cloudinary.com/sydjs/image/upload/c_thumb,f_auto,g_faces,h_320,w_600/v1392236188/jxd4gvvf3lvyug6zy8dn.png" alt="Booking some face time with Facebook" class="img-responsive"></a>
+							<div class="post-summary"><div class="post-byline"><div class="post-author"><a href="/blog/post/booking-some-face-time-with-facebook">Craig Sharkie</a></div></div><h4 itemprop="name" class="post-title mv-1"><a href="/blog/post/booking-some-face-time-with-facebook" itemprop="url">Booking some face time with Facebook</a></h4><div itemprop="description" class="post-content-brief"><p>Everyone's heard of Facebook. Most of you have a Facebook account. Many of you like Facebook. One Sydney developer has taken it to the next level.</p></div></div>
+						</article>
+					</div>
+					{{/ each }}				
 				</div>
-				{{/each}}
-			</div>
-		</div>
-		<div class="col-sm-4 col-md-3">
-			<h2>Categories</h2>
-			<div style="margin-top: 70px;" class="list-group">
-				<a href="/blog" class="active list-group-item">All Categories</a>
-				{{# each data.categories }}
-				<a href="{{categoryUrl key}}" class="false list-group-item">{{name}}</a>
-				{{/each}}
-			</div>
+{{!-- 				<h4 class="text-weight-normal">Showing {{ data.posts.results.length}} post.</h4>
+				<div class="blog">
+					{{# each data.posts.results}}
+					<div data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user _id}}{{/if}}" class="post">
+						<h2><a href="{{postUrl slug}}">{{{title}}}</a></h2>
+						<p class="lead text-muted">{{{categoryList categories prefix="Posted in "}}}
+								{{#if author.name.first}}by {{author.name.first}}{{/if}}
+						</p>
+						<p>{{{content.extended}}}</p>
+						<p class="read-more"><a href="{{postUrl slug}}">Read more...</a></p>
+					</div>
+					{{/each}}
+				</div>
+ --}}			</div>
+			<div class="col-md-2">
+{{!-- 				<h2>Categories</h2>
+				<div style="margin-top: 70px;" class="list-group">
+					<a href="/blog" class="active list-group-item">All Categories</a>
+					{{# each data.categories }}
+					<a href="{{categoryUrl key}}" class="false list-group-item">{{name}}</a>
+					{{/each}}
+				</div>
+ --}}			</div>
 		</div>
 	</div>
-	{{>pagination}}
 </div>
