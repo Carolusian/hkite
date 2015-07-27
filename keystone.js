@@ -132,8 +132,8 @@ function pullArticlePosts() {
 
 	// Save articles from spreadsheets to Mongodb
 	save = function(resptxt) {
-		var posts = JSON.parse(resptxt);
-		posts = posts['feed']['entry'];
+		var meetups = JSON.parse(resptxt);
+		meetups = posts['feed']['entry'];
 		var Post = keystone.list('Post');
 
 		posts.forEach(saveOne); // Call the functions to save all articles

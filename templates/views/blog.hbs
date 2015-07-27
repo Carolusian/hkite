@@ -14,8 +14,25 @@
 					{{# each data.posts.results}}
 					<div class="col-sm-4">
 						<article role="article" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" class="post-card">
-							<a href="/blog/post/booking-some-face-time-with-facebook" class="post-image"><img src="http://res.cloudinary.com/sydjs/image/upload/c_thumb,f_auto,g_faces,h_320,w_600/v1392236188/jxd4gvvf3lvyug6zy8dn.png" alt="Booking some face time with Facebook" class="img-responsive"></a>
-							<div class="post-summary"><div class="post-byline"><div class="post-author"><a href="/blog/post/booking-some-face-time-with-facebook">Craig Sharkie</a></div></div><h4 itemprop="name" class="post-title mv-1"><a href="/blog/post/booking-some-face-time-with-facebook" itemprop="url">Booking some face time with Facebook</a></h4><div itemprop="description" class="post-content-brief"><p>Everyone's heard of Facebook. Most of you have a Facebook account. Many of you like Facebook. One Sydney developer has taken it to the next level.</p></div></div>
+							{{#if image.exists}}
+								<a href="{{postUrl slug}}" class="post-image">
+									<img src="{{cloudinaryUrl image width=720 height=420 crop='crop'}}" class="img-responsive" />
+								</a>
+							{{/if}}
+							<div class="post-summary">
+								<div class="post-byline">
+									<div class="post-author">
+										{{#if author.name.first}}<a href="{{postUrl slug}}">{{author.name.first}}</a>{{/if}}
+									</div>
+								</div>
+								<h4 itemprop="name" class="post-title mv-1">
+									<a href="{{postUrl slug}}" itemprop="url">
+										{{title}}</a>
+								</h4>
+								<div itemprop="description" class="post-content-brief">
+									<p>{{content.brief}}</p>
+								</div>
+							</div>
 						</article>
 					</div>
 					{{/ each }}				

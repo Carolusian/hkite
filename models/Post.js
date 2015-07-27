@@ -18,9 +18,9 @@ Post.add({
     state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
     author: { type: Types.Relationship, ref: 'User', index: true },
     publishedDate: { type: Types.Date, index: true },
-    // image: { type: Types.CloudinaryImage },
+    image: { type: Types.CloudinaryImage },
     content: {
-        brief: { type: Types.Html, wysiwyg: true, height: 150 },
+        brief: { type: Types.Textarea, height: 150 },
         extended: { type: Types.Html, wysiwyg: true, height: 400 }
     },
     categories: { type: Types.Relationship, ref: 'PostCategory', many: true }
@@ -41,7 +41,7 @@ Post.schema.virtual('content.full').get(function() {
  * =============
  */
 
-Post.relationship({ ref: 'PostComment', refPath: 'post', path: 'comments' });
+//Post.relationship({ ref: 'PostComment', refPath: 'post', path: 'comments' });
 
 
 /**
