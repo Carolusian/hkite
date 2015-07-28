@@ -9,7 +9,7 @@
 <div class="page-content">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<div itemscope itemtype="http://schema.org/Blog" class="post-cards row">
 					{{# each data.posts.results}}
 					<div class="col-sm-4">
@@ -50,8 +50,8 @@
 					</div>
 					{{/each}}
 				</div>
- --}}			</div>
-			<div class="col-md-2">
+ 			</div> --}}
+			{{!-- <div class="col-md-2"> --}}
 {{!-- 				<h2>Categories</h2>
 				<div style="margin-top: 70px;" class="list-group">
 					<a href="/blog" class="active list-group-item">All Categories</a>
@@ -59,7 +59,8 @@
 					<a href="{{categoryUrl key}}" class="false list-group-item">{{name}}</a>
 					{{/each}}
 				</div>
- --}}			</div>
+ 			</div> --}}
+ 			{{>pagination}}
 		</div>
 	</div>
 </div>
