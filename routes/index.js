@@ -19,6 +19,7 @@
  */
 
 var keystone = require('keystone'),
+	i18n = require('i18n'),
 	middleware = require('./middleware'),
 	importRoutes = keystone.importer(__dirname);
 

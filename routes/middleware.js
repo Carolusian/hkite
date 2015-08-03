@@ -22,10 +22,10 @@ var _ = require('underscore');
 exports.initLocals = function(req, res, next) {
 	
 	var locals = res.locals;
-	
+	var __ = locals.__;
 	locals.navLinks = [
-		{ label: 'Home',		key: 'home',		href: '/' },
-		{ label: 'Blog',		key: 'blog',		href: '/blog' },
+		{ label: __('Home'),		key: 'home',		href: '/' },
+		{ label: __('Blog'),		key: 'blog',		href: '/blog' },
 		// { label: 'Gallery',		key: 'gallery',		href: '/gallery' },
 		// { label: 'Contact',		key: 'contact',		href: '/contact' }
 	];

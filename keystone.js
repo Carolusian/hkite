@@ -4,6 +4,7 @@ require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone'),
+	i18n = require('i18n'),
 	handlebars = require('express-handlebars');
 
 // Initialise Keystone with your project's configuration.
@@ -54,8 +55,17 @@ keystone.set('locals', {
 	editable: keystone.content.editable
 });
 
+// Configure i18n
+
+i18n.configure({
+	locales: ['en', 'zh'],
+	cookie: 'locale',
+	directory: __dirname + '/locales'
+});
+
 // Load your project's Routes
 
+keystone.pre('routes', i18n.init);
 keystone.set('routes', require('./routes'));
 
 // Setup common locals for your emails. The following are required by Keystone's
