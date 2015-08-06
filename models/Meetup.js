@@ -25,6 +25,7 @@ Meetup.add({
 	place: { type: String, required: false, initial: true, width: 'medium', default: '', note: '' },
 	map: { type: String, required: false, initial: true, width: 'medium', default: '', note: '' },
 	description: { type: Types.Html, wysiwyg: true },
+	srcUrl: { type: Types.Url, required: false, initial: true, width: 'medium', default: ''},
 	
 	// maxRSVPs: { type: Number, default: 100 },
 	// totalRSVPs: { type: Number, noedit: true },

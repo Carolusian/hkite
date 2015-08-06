@@ -1,4 +1,5 @@
-var keystone = require('keystone');
+var keystone = require('keystone'), 
+	Meetup = keystone.list('Meetup');
 
 exports = module.exports = function(req, res) {
 	
@@ -12,11 +13,33 @@ exports = module.exports = function(req, res) {
 		posts: []
 	};
 
+	// Load the first Next Meetup
+	view.on('init', function(next){
+		Meetup.model.findOne()
+			.where('state', 'active')
+			.sort('-startDate')
+			.exec(function(err, nextMeetup){
+				locals.nextMeetup = nextMeetup;
+				next();
+			});
+	});
+
+	// Load the past first Meetup
+	view.on('init', function(next){
+		Meetup.model.findOne()
+			.where('state', 'past')
+			.sort('-startDate')
+			.exec(function(err, pastMeetup){
+				locals.pastMeetup = pastMeetup;
+				next(); 
+			});
+	});
+
 	// Load all posts
 	view.on('init', function(next){
 		var q = keystone.list('Post').model.find().sort('-spreadsheetId');
 
-		q.exec(function(err, res) {
+		q.exec(function(err, res){
 			res.forEach(function(post, i){
 				// A stupid way to clone json object...
 				post = JSON.parse(JSON.stringify(post));
@@ -27,6 +50,12 @@ exports = module.exports = function(req, res) {
 			next(err);
 		});
 
+	});
+
+	// Decide which meetup to render on jumbotron
+	view.on('render', function(next){
+		locals.meetup = locals.nextMeetup || locals.pastMeetup;
+		next();
 	});
 
 	// Render the view

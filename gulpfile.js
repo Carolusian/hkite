@@ -12,7 +12,7 @@ var gulp = require('gulp'),
  * Create variables for our project paths so we can change in one place
  */
 var paths = {
-	'src':['./models/**/*.js','./routes/**/*.js', 'keystone.js', 'package.json']
+	'src':['./models/**/*.js','./routes/**/*.js', './locales/*.json', 'keystone.js', 'package.json']
 };
 
 var lessPaths = {

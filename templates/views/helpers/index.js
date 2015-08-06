@@ -34,6 +34,14 @@ module.exports = function() {
 		}
 	};
 	
+	_helpers.ternary = function(cond, test, yes, no) {
+		return cond == test ? yes : no;
+	}
+
+	_helpers.or = function(a, b) {
+		return a || b;
+	}
+
 	/**
 	 * Port of Ghost helpers to support cross-theming
 	 * ==============================================
