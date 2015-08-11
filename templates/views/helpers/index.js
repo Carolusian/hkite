@@ -3,6 +3,7 @@ var _ = require('underscore');
 var hbs = require('handlebars');
 var keystone = require('keystone');
 var cloudinary = require('cloudinary');
+var truncate = require('html-truncate');
 
 
 // Declare Constants
@@ -35,7 +36,8 @@ module.exports = function() {
 	};
 	
 	_helpers.ternary = function(cond, test, yes, no) {
-		return cond == test ? yes : no;
+		return cond == test ? 
+				this._locals.__(yes) : this._locals.__(no);
 	}
 
 	_helpers.or = function(a, b) {
@@ -285,23 +287,23 @@ module.exports = function() {
 		return html;
 	};
 
-        // special helper to ensure that we always have a valid page url set even if
-        // the link is disabled, will default to page 1
-        _helpers.paginationPreviousUrl = function(previousPage, totalPages){
-            if(previousPage === false){
-                previousPage = 1;
-            }
-            return _helpers.pageUrl(previousPage);
-        };
+    // special helper to ensure that we always have a valid page url set even if
+    // the link is disabled, will default to page 1
+    _helpers.paginationPreviousUrl = function(previousPage, totalPages){
+        if(previousPage === false){
+            previousPage = 1;
+        }
+        return _helpers.pageUrl(previousPage);
+    };
 
-        // special helper to ensure that we always have a valid next page url set
-        // even if the link is disabled, will default to totalPages
-        _helpers.paginationNextUrl = function(nextPage, totalPages){
-            if(nextPage === false){
-                nextPage = totalPages;
-            }
-            return _helpers.pageUrl(nextPage);
-        };
+    // special helper to ensure that we always have a valid next page url set
+    // even if the link is disabled, will default to totalPages
+    _helpers.paginationNextUrl = function(nextPage, totalPages){
+        if(nextPage === false){
+            nextPage = totalPages;
+        }
+        return _helpers.pageUrl(nextPage);
+    };
 
 
 	//  ### Flash Message Helper
@@ -341,6 +343,10 @@ module.exports = function() {
 		}
 		return new hbs.SafeString(output);
 	};
+
+	_helpers.truncate = function(content, length) {
+		return truncate(content, length);
+	}
 
 	_helpers.__ = function(message) {
 		return this._locals.__(message);

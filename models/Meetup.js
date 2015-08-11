@@ -49,7 +49,7 @@ Meetup.add({
 // ------------------------------
 
 Meetup.schema.virtual('url').get(function() {
-	return '/meetups/' + this.key;
+return '/meetups/' + this.key;
 });
 
 /* Meetup.schema.virtual('remainingRSVPs').get(function() {

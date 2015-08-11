@@ -10,14 +10,14 @@ exports = module.exports = function(req, res) {
 	// item in the header navigation.
 	locals.section = 'home';
 	locals.data = {
-		posts: []
+		meetups: []
 	};
 
 	// Load the first Next Meetup
 	view.on('init', function(next){
 		Meetup.model.findOne()
 			.where('state', 'active')
-			.sort('-startDate')
+			.sort('startDate')
 			.exec(function(err, nextMeetup){
 				locals.nextMeetup = nextMeetup;
 				next();
@@ -35,17 +35,15 @@ exports = module.exports = function(req, res) {
 			});
 	});
 
-	// Load all posts
+	// Load all Meetups 
 	view.on('init', function(next){
-		var q = keystone.list('Post').model.find().sort('-spreadsheetId');
+		var q = keystone.list('Meetup').model.find().sort('-startDate');
 
 		q.exec(function(err, res){
-			res.forEach(function(post, i){
-				// A stupid way to clone json object...
-				post = JSON.parse(JSON.stringify(post));
+			res.forEach(function(meetup, i){
 				// The first one is odd, but 0 % 2 == 0
-				i % 2 == 0? post.listColumn = "-odd": post.listColumn = "-even";
-				locals.data.posts.push(post);
+				i % 2 == 0? meetup.listColumn = "-odd": meetup.listColumn = "-even";
+				locals.data.meetups.push(meetup);
 			});
 			next(err);
 		});

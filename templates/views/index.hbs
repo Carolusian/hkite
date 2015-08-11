@@ -3,7 +3,7 @@
 	<section class="hero-intro hero-intro--hasmask">
         <div class="hero-background"></div>
         <div class="hero-intro-content">
-            <h5 class="subtitle">{{ternary meetup.state "active" "下一個" "過去的"}} {{__ "Meetup"}}</h5>
+            <h5 class="subtitle">{{ternary meetup.state "active" "Next" "Past"}} {{__ "Meetup"}}</h5>
             <h1 class="title">{{{meetup.name}}}</h1>
             <p class="byline"><strong>{{__ "Time"}}:
             {{date meetup.startDate format="YYYY-MM-DD"}} 
@@ -14,7 +14,7 @@
             </strong></p>
             <p class="byline">{{{ meetup.place}}}  — <a href="http://maps.google.com.au/?daddr={{{or meetup.map meetup.place }}}" target="_blank">Directions</a></p>
             </div>
-            <div class="hero-button"><div id="next-meetup" data-id="54b3a33ca9affc020091eda0"><div class="alert alert-success mb-0 text-center"><a href="活動來源">{{__ "Meetup Source"}}</a></div>
+            <div class="hero-button"><div id="next-meetup" data-id="54b3a33ca9affc020091eda0"><div class="alert alert-success mb-0 text-center"><a target="_blank" href="{{{meetup.srcUrl}}}">{{__ "Meetup Source"}}</a></div>
             </div>
         </div>
     </section>
@@ -23,13 +23,15 @@
             <div class="timeline">
                 <div class="timeline-path"></div>
                 <div class="timeline-item--offset"></div>
-                {{# each data.posts}}
+                {{#each data.meetups}}
                 <div class="timeline-item timeline-item-{{listColumn}}">
                     <div class="timeline-item-node"></div>
-                    <a href="{{link}}" rel="{{linkTitle}}" target="_blank" class="timeline-item-inner">
-                        <h6 class="text-caps text-danger"></h6>
-                        <h4>{{{title}}}</h4>
-                        {{{content}}}
+                    <a href="{{{srcUrl}}}" rel="{{name}}" target="_blank" class="timeline-item-inner">
+                        <h6 class="text-caps text-danger">
+                            {{date startDate format="MMM DD, YYYY"}}
+                        </h6>
+                        <h4>{{{name}}}</h4>
+                        {{{truncate description 600}}}
                     </a>
                 </div>
                 {{/each}}
