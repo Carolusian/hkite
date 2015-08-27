@@ -197,7 +197,7 @@ function gracefulExit() {
   	});
 }
 
-var pagenums = 1;
+var pagenums = 10;
 
 var url = process.env.WECHAT_ACCOUNT_URL;
 crawl(url);
