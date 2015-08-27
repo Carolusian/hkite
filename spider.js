@@ -28,11 +28,23 @@ var Post = mongoose.model('Post',  {
 	title: 'String',
 	state: 'String',
 	slug: 'String',
-	publishedDate: 'Date',
 	content: {
 		brief: 'String',
 		extended: 'String'
-	}
+	},
+	image: {
+		public_id: 'String',
+		version: 'Number',
+		signature: 'String',
+		width: 'Number',
+		height: 'Number',
+		format: 'String',
+		resource_type: 'String',
+		url: 'String',
+		secure_url: 'String'
+	},
+	publishedDate: 'Date',
+	source: 'String'
 });
 
 /**
@@ -137,26 +149,45 @@ function savePost(post) {
 	$ = cheerio.load($('#js_content').html());
 	var imgs = $('img');
 	if(imgs['0'] != undefined) {
+		cloudinary.uploader.upload($(imgs['0']).attr('data-src'), function(result) {
+			var post = new Post({
+				title: postTitle,
+				content: {
+					brief: postBrief,
+					extended: postContent
+				},
+				image: result,
+				publishedDate: postDate, 
+				state: 'published',
+				slug: slug(postTitle), 
+				source: 'wechat'
+			});
+
+			post.save(function(err) {
+				if(err) console.log(err);
+				console.log('meow');
+			});
+		});
 
 	} else {
-
+		var post = new Post({
+			title: postTitle,
+			content: {
+				brief: postBrief,
+				extended: postContent
+			},
+			publishedDate: postDate, 
+			state: 'published',
+			slug: slug(postTitle),
+			source: 'wechat'
+		});
+		post.save(function(err) {
+			if(err) console.log(err);
+			console.log('meow');
+		});
 	}
 
-	var post = new Post({
-		title: postTitle,
-		content: {
-			brief: postBrief,
-			extended: postContent
-		},
-		publishedDate: postDate, 
-		state: 'published',
-		slug: slug(postTitle) 
-	});
 
-	post.save(function(err) {
-		if(err) console.log(err);
-		console.log('meow');
-	});
 }
 
 function gracefulExit() {
@@ -168,9 +199,12 @@ function gracefulExit() {
 
 var pagenums = 1;
 
-var url = process.env.WEIXIN_ACCOUNT_URL;
-// crawl(url);
-var content = fs.readFileSync('http://mmbiz.qpic.cn/mmbiz/RT3nzzJnPhricfPaz43DjFonX3Rvk59Pg91uWqYgdIXWbug7pYoo7qQFJdQUNia5YHOXAOCTib2q3ZibZ89IUML1Dw/0?wx_fmt=png');
-console.log(content);
+var url = process.env.WECHAT_ACCOUNT_URL;
+crawl(url);
 
 process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
+
+// Only allow this script to run for 1 hour each time
+setTimeout(function(){
+	gracefulExit();
+}, 3600 * 1000);
