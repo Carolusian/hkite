@@ -98,5 +98,17 @@
 		--}}
 		<script src="/js/lib/bootstrap/bootstrap-3.2.0.min.js"></script>
 		{{{isAdminEditorJS user}}}
+
+		<script type="text/javascript">
+		$(function(){
+			$('img').each(function(idx, el){
+				if($(el).attr('data-src')) {
+					$(el).attr('src', $(el).attr('data-src'));
+					$(el).addClass('img-responsive');
+				}
+			});
+
+		});
+		</script>
 	</body>
 </html>
