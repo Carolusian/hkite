@@ -10,9 +10,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div itemscope itemtype="http://schema.org/Blog" class="post-cards row">
+				<div itemscope itemtype="http://schema.org/Blog" class="post-cards row masonry-container">
 					{{# each data.posts.results}}
-					<div class="col-sm-4">
+					<div class="col-sm-4 item">
 						<article role="article" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" class="post-card">
 							{{#if image.exists}}
 								<a href="{{postUrl slug}}" class="post-image">
@@ -63,4 +63,15 @@
  			{{>pagination}}
 		</div>
 	</div>
-</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+	<script src="/js/lib/imagesloaded.pkgd.min.js"></script>
+	<script type="text/javascript">
+		var $container = $('.masonry-container');
+		$container.imagesLoaded( function () {
+		  $container.masonry({
+		    columnWidth: '.item',
+		    itemSelector: '.item'
+		  });   
+		});	
+	</script>
+	</div>

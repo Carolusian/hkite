@@ -228,6 +228,11 @@ module.exports = function() {
 	_helpers.postUrl = function(postSlug, options) {
 		return ('/blog/post/' + postSlug);
 	};
+
+	// Sites base url
+	_helpers.siteUrl = function() {
+		return process.env.SITE_URL;
+	}
 	
 	// might be a ghost helper
 	// used for pagination urls on blog

@@ -7,7 +7,6 @@
 require('dotenv').load();
 
 var _         = require('underscore'),
-	fs        = require('fs'),
     Nightmare = require('nightmare'),
     cheerio   = require('cheerio'),
     request   = require('request'),

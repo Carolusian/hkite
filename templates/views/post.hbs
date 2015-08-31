@@ -22,7 +22,7 @@
 	<script type="text/javascript">
 	    /* * * CONFIGURATION VARIABLES * * */
 	    var disqus_shortname = 'hkite';
-	    var disqus_url = 'http://hkite.ayafish.com{{postUrl data.post.slug}}'; 
+	    var disqus_url = '{{siteUrl}}{{postUrl data.post.slug}}'; 
 	    /* * * DON'T EDIT BELOW THIS LINE * * */
 	    (function() {
 	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -31,4 +31,16 @@
 	    })();
 	</script>
 	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+	
+	<script type="text/javascript">
+	$(function(){
+		$('img').each(function(idx, el){
+			if($(el).attr('data-src')) {
+				$(el).attr('src', $(el).attr('data-src'));
+				$(el).addClass('img-responsive');
+			}
+		});
+
+	});
+	</script>
 </div>
