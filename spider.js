@@ -158,7 +158,7 @@ function savePost(post) {
 				image: result,
 				publishedDate: postDate, 
 				state: 'published',
-				slug: slug(postTitle), 
+				slug: slug(postTitle, {tone:false}), 
 				source: 'wechat'
 			});
 
@@ -177,7 +177,7 @@ function savePost(post) {
 			},
 			publishedDate: postDate, 
 			state: 'published',
-			slug: slug(postTitle),
+			slug: slug(postTitle, {tone: false}),
 			source: 'wechat'
 		});
 		post.save(function(err) {
