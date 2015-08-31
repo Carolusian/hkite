@@ -203,7 +203,7 @@ crawl(url);
 
 process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
 
-// Only allow this script to run for 1 hour each time
+// Only allow this script to run for 5 mins each time
 setTimeout(function(){
 	gracefulExit();
-}, 3600 * 1000);
+}, 300 * 1000);
