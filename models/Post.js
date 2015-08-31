@@ -21,6 +21,9 @@ Post.add({
     image: { type: Types.CloudinaryImage },
     content: {
         brief: { type: Types.Textarea, height: 150 },
+        markdown: { type: Types.Markdown, height:400, 
+            note: 'NOTE: If both markdown and html editors have content, markdown prevails!' },
+            
         extended: { type: Types.Html, wysiwyg: true, height: 400 }
     },
     categories: { type: Types.Relationship, ref: 'PostCategory', many: true }
@@ -35,6 +38,14 @@ Post.schema.virtual('content.full').get(function() {
     return this.content.extended || this.content.brief;
 });
 
+Post.schema.pre('save', function(next) {
+    // If markdown field is not empty and extended field is empty
+    // Then save markdown content to extended field 
+    if(this.content.markdown) {
+        this.content.extended = this.content.markdown.html;
+    }
+    next();
+});
 
 /**
  * Relationships
