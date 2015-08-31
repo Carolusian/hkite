@@ -56,8 +56,8 @@ function crawl(url) {
 		.goto(url)
 		.wait(5 * 1000);
 
-	// Emulate click event to load the first 10 pages
-	// We only need the data from the first 10 pages
+	// Emulate click event to load the first {pagenums} pages
+	// We only need the data from the first {pagenums} pages
 	for(var i = 0 ; i < pagenums; i++) {
 		var page = page.click('.p-more').wait(5 * 1000);
 	}
@@ -196,7 +196,7 @@ function gracefulExit() {
   	});
 }
 
-var pagenums = 10;
+var pagenums = 1;
 
 var url = process.env.WECHAT_ACCOUNT_URL;
 crawl(url);
