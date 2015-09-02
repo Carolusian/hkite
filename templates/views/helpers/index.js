@@ -44,6 +44,13 @@ module.exports = function() {
 		return a || b;
 	}
 
+	_helpers.if_not_null = function(a, options) {
+		if(a)
+			return options.fn(this);
+		else
+			return options.inverse(this);
+	}
+
 	/**
 	 * Port of Ghost helpers to support cross-theming
 	 * ==============================================

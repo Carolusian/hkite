@@ -9,10 +9,10 @@
             {{date meetup.startDate format="YYYY-MM-DD"}} 
             — 
             {{date meetup.startDate format="HH:mm"}} 
-            - 
-            {{date meetup.endDate format="HH:mm"}}
             </strong></p>
+            {{#if_not_null meetup.place}}
             <p class="byline">{{{ meetup.place}}}  — <a href="http://maps.google.com.au/?daddr={{{or meetup.map meetup.place }}}" target="_blank">Directions</a></p>
+            {{/if_not_null}}
             </div>
             <div class="hero-button"><div id="next-meetup" data-id="54b3a33ca9affc020091eda0"><div class="alert alert-success mb-0 text-center"><a target="_blank" href="{{{meetup.srcUrl}}}">{{__ "Meetup Source"}}</a></div>
             </div>
@@ -30,8 +30,8 @@
                         <h6 class="text-caps text-danger">
                             {{date startDate format="MMM DD, YYYY"}}
                         </h6>
-                        <h4>{{{name}}}</h4>
-                        {{{truncate description 600}}}
+                        <h4 style="font-weight: bold; color:#333;">{{{name}}}</h4>
+                        <p style='white-space: pre-wrap;'>{{{description}}}</p>
                     </a>
                 </div>
                 {{/each}}
@@ -39,3 +39,12 @@
         </div>
     </section>
 </article>
+<script type='text/javascript'>
+    $(window).scroll(function() {
+        console.log($(window).height());
+        console.log($(document).height());
+        if($(window).scrollTop() == $(document).height() - $(window).height()) {
+            console.log('bottom');
+        }
+    });
+</script>
