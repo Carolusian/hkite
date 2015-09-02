@@ -67,7 +67,7 @@ function updatePastEventState() {
 	Meetup.find({state: 'active'}).exec(function(err, meetups) {
 		_.each(meetups, function(m, idx) {
 			console.log(m);
-			if(moment().isAfter(moment(m.startDate).add('day', 1))) m.state = 'past';
+			if(moment().isAfter(moment(m.startDate))) m.state = 'past';
 			m.save(function(err) {
 				if(err) console.log(err);
 				else console.log('meow');
