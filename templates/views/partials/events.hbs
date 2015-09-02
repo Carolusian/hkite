@@ -1,0 +1,13 @@
+{{#each data.meetups}}
+<div class="timeline-item timeline-item-{{listColumn}}">
+    <div class="timeline-item-node"></div>
+    <a href="{{{srcUrl}}}" rel="{{name}}" target="_blank" class="timeline-item-inner">
+        <h6 class="text-caps text-danger">
+            {{date startDate format="MMM DD, YYYY"}}
+        </h6>
+        <h4 style="font-weight: bold; color:#333;">{{{name}}}</h4>
+        <p style='white-space: pre-wrap;'>{{{description}}}</p>
+    </a>
+</div>
+{{/each}}
+

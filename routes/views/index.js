@@ -37,11 +37,11 @@ exports = module.exports = function(req, res) {
 
 	// Load all Meetups 
 	view.on('init', function(next){
-		var pagesize = 10;
+		var pagesize = 20;
 		var page = req.query.page || 1;
 		console.log(page);
 		var q = keystone.list('Meetup').model.find().sort('-startDate')
-						.skip( (page-1) * pagesize).limit(pagesize);
+						.skip((page-1) * pagesize).limit(pagesize);
 
 		q.exec(function(err, res){
 			res.forEach(function(meetup, i){
@@ -62,12 +62,7 @@ exports = module.exports = function(req, res) {
 
 	// Render json or view (depend whether the request is ajax request)
 	if(req.xhr || req.headers.accept.indexOf('json') > -1) {
-		view.render(function(err) {
-			if(err) return res.apiError('error', err);
-			res.apiResponse({
-				test: 'hello'
-			});
-		});
+		view.render('partials/events', {layout: false});
 	} else {
 		view.render('index');
 	}

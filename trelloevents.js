@@ -60,6 +60,22 @@ function readEvents(trelloBoard) {
 	});
 }
 
+/**
+ * Update event state if it becomes past event
+ */
+function updatePastEventState() {
+	Meetup.find({state: 'active'}).exec(function(err, meetups) {
+		_.each(meetups, function(m, idx) {
+			console.log(m);
+			if(moment().isAfter(moment(m.startDate).add('day', 1))) m.state = 'past';
+			m.save(function(err) {
+				if(err) console.log(err);
+				else console.log('meow');
+			});
+		});
+	});
+}
+
 function gracefulExit() {
 	mongoose.connection.close(function () {
     	console.log('Mongoose default connection is disconnected through app termination');
@@ -67,8 +83,9 @@ function gracefulExit() {
   	});
 }
 
-var url = "https://trello.com/b/5rNlh0iF/event.json";
+var url = process.env.TRELLO_EVENTS_URL;
 crawl(url);
+updatePastEventState();
 
 process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
 

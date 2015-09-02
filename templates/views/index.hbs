@@ -40,11 +40,16 @@
     </section>
 </article>
 <script type='text/javascript'>
+    var page = 1;
     $(window).scroll(function() {
-        console.log($(window).height());
-        console.log($(document).height());
-        if($(window).scrollTop() == $(document).height() - $(window).height()) {
-            console.log('bottom');
+        if($(window).scrollTop() >= $(document).height() - $(window).height() - 100) {
+            page = page + 1;
+            $.ajax({
+                method: 'GET',
+                url: '/?page=' + page,
+            }).done(function(html) {
+                $(html).appendTo('.timeline');
+            });
         }
     });
 </script>
