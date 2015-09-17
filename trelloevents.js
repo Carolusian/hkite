@@ -50,7 +50,7 @@ function readEvents(trelloBoard) {
 			m.endDate = e.due;
 			m.description = e.desc.trim();
 			m.srcUrl = e.url;
-			if (moment().isAfter(moment(m.startDate).add('day', 1))) m.state = 'past';
+			if (moment().isAfter(moment(m.startDate).add(1, 'day'))) m.state = 'past';
 			else m.state = 'active';
 			m.save(function(err) {
 				if(err) console.log(err);
