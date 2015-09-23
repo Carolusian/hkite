@@ -27,14 +27,22 @@
 		{{/ each }}				
 		<br />
 		<br />
-
+{{!-- 		<h4><b>{{{__ "Substitution list order"}}}:<b><h4>
+		{{# each data.substitutes}}
+			<code>{{this}}</code>, 
+		{{else}}
+			<code>{{{__ "Please be patient"}}}</code>
+		{{/ each }}				
+		<br />
+		<br />
+ --}}
 		{{#if_not_null data.image}}
 			<img src="{{cloudinaryUrl data.image width=720 height=420 crop='fit'}}" class="img-responsive center-block" />
         {{/if_not_null}}
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var count={{countdown}};
+		var count={{countdown}} < 1 ? 1: {{countdown}};
 
 		var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
 

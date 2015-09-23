@@ -19,34 +19,35 @@ Lottery.add({
 	description: { type: Types.Markdown, height:400 },
 
 	enrolled: { type: Types.TextArray },
-	winners: {type: Types.TextArray}
+	winners: {type: Types.TextArray},
+	substitutes: {type: Types.TextArray},
 });
 
 
 Lottery.schema.pre('save', function(next) {
+	/** --Fisher–Yates shuffle--
 	var shuffle = function(array) {
 		var m = array.length, t, i;
 
-	  	// While there remain elements to shuffle…
 	 	while (m) {
-
-		    // Pick a remaining element…
 		    i = Math.floor(Math.random() * m--);
 
-		    // And swap it with the current element.
 		    t = array[m];
 		    array[m] = array[i];
 		    array[i] = t;
 		}
 
 	  return array;
-	}
+	}*/
 
 	if(moment().isAfter(this.endDate)) {
-		shuffled = shuffle(this.enrolled);
+		shuffled = _.shuffle(this.enrolled);
 		this.winners = _.first(shuffled, this.limit);
+		this.substitutes = _.last(shuffled, shuffled.length - this.limit);
+		console.log(shuffled);
 	} else {
 		this.winners = [];
+		this.substitutes = [];
 	}
 
 	next();
