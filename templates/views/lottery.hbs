@@ -1,0 +1,55 @@
+<div class="page-intro">
+	<div class="container">
+		<h1 class="page-title">{{{__ "Luck"}}}</h1>
+		<h2 class="lead">
+			<b>{{{data.title}}}.</b>
+		</h2>
+		<big><label id="timer" style="font-size:45pt; color:green">----</label>s</big>
+		<form class="form-inline" method="post">
+			<input type="hidden" name="action" value="enroll"/>
+			<div class="form-group">
+				<input type="text" name="name" class="form-control" placeholder="{{{__ "Your Name in HKITE Wechat Group"}}}">
+			</div>
+			<button type="submit" class="btn btn-primary">{{{__ "Take Part In"}}}</button>
+		</form>
+		<br />
+		<h4><b>{{{__ "Waiting list for lottery"}}}:<b><h4>
+		{{# each data.enrolled}}
+			<code>{{this}}</code>, 
+		{{/ each }}				
+		<br />
+		<br />
+		<h4><b>{{{__ "Winner list for lottery"}}}:<b><h4>
+		{{# each data.winners}}
+			<code>{{this}}</code>, 
+		{{else}}
+			<code>{{{__ "Please be patient"}}}</code>
+		{{/ each }}				
+		<br />
+		<br />
+
+		{{#if_not_null data.image}}
+			<img src="{{cloudinaryUrl data.image width=720 height=420 crop='fit'}}" class="img-responsive center-block" />
+        {{/if_not_null}}
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var count={{countdown}};
+
+		var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+
+		function timer()
+		{
+			count=count-1;
+			$("#timer").html(count);
+		  	if (count <= 0)
+		  	{
+		     	clearInterval(counter);
+		     	//counter ended, do something here
+		    	return;
+		  	}
+
+		  //Do code for showing the number of seconds here
+		}
+	});
+</script>

@@ -26,6 +26,7 @@ exports.initLocals = function(req, res, next) {
 	locals.navLinks = [
 		{ label: __('Meetups'),		key: 'home',		href: '/' },
 		{ label: __('Blog'),		key: 'blog',		href: '/blog' },
+		{ label: __('Luck'),		key: 'luck',		href: '/luck/peng-bo-shang-ye-zhou-kan15092-3' },
 		// { label: 'Gallery',		key: 'gallery',		href: '/gallery' },
 		// { label: 'Contact',		key: 'contact',		href: '/contact' }
 	];
