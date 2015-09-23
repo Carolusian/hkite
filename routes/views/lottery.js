@@ -34,16 +34,16 @@ exports = module.exports = function(req, res) {
 		var name = req.body.name.trim();
 
 		if(name == "") {
-			req.flash('error', {detail: '請不要輸入空值'});
+			req.flash('error', {detail: locals.__('Please input your name')});
 			res.redirect('/luck/' + locals.filters.lottery);
 		} else if(_.contains(locals.data.enrolled, name)) {
-			req.flash('error', {detail: name + ' 已在抽獎名單中.'});
+			req.flash('error', {detail: name + ' '+locals.__('has been in the waiting list')});
 			res.redirect('/luck/' + locals.filters.lottery);
 		} else {
 			locals.data.enrolled.push(name);
 			locals.data.save(function(err) {
 				if(err) return next(err);
-				req.flash('success', {detail: name + ' 祝你好運氣:p.'});
+				req.flash('success', {detail: name + '. '+ locals.__('Wish you best of luck') + ' ;p'});
 				res.redirect('/luck/' + locals.filters.lottery);
 			});
 		}
