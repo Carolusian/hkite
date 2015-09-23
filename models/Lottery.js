@@ -44,7 +44,6 @@ Lottery.schema.pre('save', function(next) {
 		shuffled = _.shuffle(this.enrolled);
 		this.winners = _.first(shuffled, this.limit);
 		this.substitutes = _.last(shuffled, shuffled.length - this.limit);
-		console.log(shuffled);
 	} else {
 		this.winners = [];
 		this.substitutes = [];
