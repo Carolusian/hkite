@@ -27,7 +27,7 @@
 		{{/ each }}				
 		<br />
 		<br />
-{{!-- 		<h4><b>{{{__ "Substitution list order"}}}:<b><h4>
+		<h4><b>{{{__ "Substitution list order"}}}:<b><h4>
 		{{# each data.substitutes}}
 			<code>{{this}}</code>, 
 		{{else}}
@@ -35,7 +35,7 @@
 		{{/ each }}				
 		<br />
 		<br />
- --}}
+
 		{{#if_not_null data.image}}
 			<img src="{{cloudinaryUrl data.image width=720 height=420 crop='fit'}}" class="img-responsive center-block" />
         {{/if_not_null}}
